@@ -1,0 +1,4 @@
+find: ‘/etc/ssl/private’: Permission denied
+find: ‘/etc/polkit-1/localauthority’: Permission denied
+/etc/default/grub
+find: ‘/etc/cups/ssl’: Permission denied
