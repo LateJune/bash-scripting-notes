@@ -667,3 +667,76 @@ user@machine$ kill %1
 
 ---
 ## Debugging Scripts 
+
+bash prog
+- run bash program; dont need execute permissions
+
+bash -x prog
+- echo commands after processing; can also do set -x or set +x inside of script
+
+bash -n prog
+- Do not execute commands, check for syntax errors only
+
+set -u
+- reports usage of an unset variable
+
+lots of echo statements
+
+tee command
+- `cmd | tee log.file | ...`
+
+
+## Trap: Using Signals
+
+The bash track command is for signal handling
+- Change behavior of signals within a script
+- Ignore singals during critial sections in a script
+- Allow the script to die gracefully
+- Perform some operations when a signal is recieved 
+
+```sh
+user@machine$ cat trapint
+trap 'echo just got int; exit' INT # INT - name of the interrupt signal I.E. ctrl-c
+trap "echo you cannot quit now" QUIT # QUIT - name of the quit signal I.E. ctrl-\
+cd / 
+while
+true
+do
+	echo looping
+	du -m * 2>/dev/null
+	echo sleeping
+	sleep 5
+done
+```
+
+`kill -l` lists all of the signals available
+
+## Eval command
+
+Use to have bash evaluate a string
+
+Makes a "second pass" over the string and then runs it as a command
+
+runs "data" in effect, so be careful about providing a way for arbitrary code execution
+
+```sh
+c="ls | tr 'a' 'A'"; $c # this does not work
+eval $c # works 
+```
+
+## Getopt Command
+get opt is used to process command line options
+
+Option names, long and single letter, are specified and whether they take an argument 
+
+```sh
+opts=`getopt -o a: -l apple -- "$@"`
+```
+
+- Option a, log form -apple, takes an argument 
+- getopt prints the parse arguments 
+- `$@` standard bash notiation
+	- bash variable for lost of paratemters passed
+- `--` used to mark end of processing 
+
+Typical to loop through the argiments using a case statment to match and handle them
