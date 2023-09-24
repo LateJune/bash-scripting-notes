@@ -6,7 +6,7 @@ echo a is $a b is $b c is $c
 
 if
 	true
-tehn
+then
 	echo trie is successful
 else
 	echo true is not successful
